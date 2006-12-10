@@ -1,4 +1,3 @@
-
 import icon.ChatIcon;
 import icon.ChatIconListener;
 import java.net.InetAddress;
