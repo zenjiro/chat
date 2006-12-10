@@ -345,10 +345,10 @@ public class MainFrame {
                         TableItem tableItem = new TableItem(this.othersTable, SWT.NONE);
                         tableItem.setText(entry.getKey() + "@" + entry.getValue().getStatus());
                         if (entry.getValue().isOpen()) {
-                            tableItem.setImage(new Image(Display.getDefault(), "frame/bubble_yellow.gif"));
+                            tableItem.setImage(new Image(Display.getDefault(), "img/bubble_yellow.gif"));
                         } else {
                             tableItem.setImage(new Image(Display.getDefault(),
-                                    "frame/bubble_gray.gif"));
+                                    "img/bubble_gray.gif"));
                         }
                     }
                 }

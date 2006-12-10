@@ -117,13 +117,13 @@ public class ChatIcon {
         public void run() {
             switch (ChatIcon.this.icon) {
             case ICON_NO_ONE_TALKING:
-                ChatIcon.this.trayItem.setImage(new Image(ChatIcon.this.display, "icon/bubble_gray.gif"));
+                ChatIcon.this.trayItem.setImage(new Image(ChatIcon.this.display, "img/bubble_gray.gif"));
                 break;
             case ICON_OTHERS_TALKING:
-                ChatIcon.this.trayItem.setImage(new Image(ChatIcon.this.display, "icon/bubble_yellow.gif"));
+                ChatIcon.this.trayItem.setImage(new Image(ChatIcon.this.display, "img/bubble_yellow.gif"));
                 break;
             case ICON_CALLED_ME:
-                ChatIcon.this.trayItem.setImage(new Image(ChatIcon.this.display, "icon/bubble_red.gif"));
+                ChatIcon.this.trayItem.setImage(new Image(ChatIcon.this.display, "img/bubble_red.gif"));
                 break;
             default:
                 throw new IllegalArgumentException("そのようなアイコンは指定できません。");

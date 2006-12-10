@@ -1,15 +1,13 @@
 import icon.ChatIcon;
 import icon.ChatIconListener;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.StringTokenizer;
-import network.Network;
+
 import network.NetworkListener;
-import frame.MainFrameListener;
+import network.Server;
 import frame.MainFrame;
+import frame.MainFrameListener;
 
 /**
  * チャットクライアントです。
@@ -50,51 +48,21 @@ public class Main {
             }
         }
         final String name = userName;
-        final Network network = new Network(name);
         final MainFrame frame = new MainFrame(name, defaultStatus);
         final ChatIcon icon = new ChatIcon();
-        network.setNetworkListener(new NetworkListener() {
-            public void messageReceived(String message) {
-                Calendar calender = Calendar.getInstance();
-                DateFormat format = new SimpleDateFormat("HH:mm");
-                //frame.append(format.format(calender.getTime()) + "\t" + message); 
-                frame.append(message);
-                StringTokenizer tokeinizer = new StringTokenizer(message);
-                if (tokeinizer.countTokens() > 1) {
-                    if (!tokeinizer.nextToken().equals(name)) {
-                        lastTalkingTime = System.currentTimeMillis();
-                        if (message.indexOf(name) > 0) {
-                            icon.setIcon(ChatIcon.ICON_CALLED_ME);
-                        } else {
-                            if (icon.getIcon() == ChatIcon.ICON_NO_ONE_TALKING) {
-                                icon.setIcon(ChatIcon.ICON_OTHERS_TALKING);
-                            }
-                        }
-                    }
-                }
-            }
-
-            public void statusReceived(String user, String status, boolean isOpen) {
-                frame.setStatus(user, status, isOpen);
-            }
-        });
         frame.setFrameListener(new MainFrameListener() {
             public void messageSent(String message) {
                 if (message.length() > 0) {
-                    network.sendMessage(message);
                 }
             }
 
             public void statusChanged() {
-                network.sendStatus(frame.getStatus(), frame.isOpen());
             }
 
             public void appeared() {
-                network.sendStatus(frame.getStatus(), frame.isOpen());
             }
 
             public void disappeared() {
-                network.sendStatus(frame.getStatus(), frame.isOpen());
             }
         });
         icon.setListener(new ChatIconListener() {
@@ -113,19 +81,16 @@ public class Main {
                 }
             }
         });
-        new SendStatusThread(frame, network).start();
         new ChangeIconThread(icon).start();
-        network.connect();
         Runtime.getRuntime().addShutdownHook(new Thread() {
             public void run() {
-                network.sendStatus(null, false);
-                network.disconnect();
             }
         });
-        // test 
-        frame.setStatus("くまの", "在席", true);
-        frame.setStatus("タニム", "離籍", false);
-        frame.show();
+        Server.getServer().addNetworkListener(new NetworkListener() {
+			public void gotMessage(final String message) {
+				frame.append(message);
+			}
+		});
         icon.waitForDisposed();
     }
 
