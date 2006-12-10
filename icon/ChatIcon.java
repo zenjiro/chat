@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.TrayItem;
 
 /**
  * システムトレイに表示されるアイコンに関する処理をするクラスです。
- * @author Kumano Tatsuo
+ * @author zenjiro
  * 作成日：2004/11/11
  */
 public class ChatIcon {
@@ -110,7 +110,7 @@ public class ChatIcon {
     
     /**
      * アイコンを非同期で更新するクラスです。
-     * @author Kumano Tatsuo
+     * @author zenjiro
      * 作成日：2004/11/12
      */
     class UpdateThread implements Runnable {

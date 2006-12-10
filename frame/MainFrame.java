@@ -26,7 +26,7 @@ import org.eclipse.swt.widgets.Text;
 
 /**
  * チャットを行うフレームです。
- * @author Kumano Tatsuo
+ * @author zenjiro
  * 作成日：2004/11/11
  */
 public class MainFrame {
@@ -379,7 +379,7 @@ public class MainFrame {
 
     /**
      * 追加されたメッセージがあるかどうかを非同期に呼び出すためのクラスです。
-     * @author Kumano Tatsuo
+     * @author zenjiro
      * 作成日：2004/11/12
      */
     class UpdateThread implements Runnable {

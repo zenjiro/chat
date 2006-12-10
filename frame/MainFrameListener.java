@@ -2,7 +2,7 @@ package frame;
 
 /**
  * メインフレームでのイベントを処理するリスナです。
- * @author Kumano Tatsuo
+ * @author zenjiro
  * 作成日：2004/11/11
  */
 public interface MainFrameListener {

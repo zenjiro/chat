@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 
 /**
  * ネットワークに関する処理を行うクラスです。
- * @author Kumano Tatsuo
+ * @author zenjiro
  * 作成日：2004/11/11
  */
 public class Network implements Runnable {

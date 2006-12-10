@@ -4,7 +4,7 @@ import network.Network;
 
 /**
  * 一定時間毎に状態を再送信するクラスです。
- * @author Kumano Tatsuo
+ * @author zenjiro
  * 作成日：2004/11/12
  */
 public class SendStatusThread extends Thread {
