@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.TrayItem;
 
 /**
  * システムトレイに表示されるアイコンに関する処理をするクラスです。
- * @author zenjiro
+ * @author Kumano Tatsuo
  * 作成日：2004/11/11
  */
 public class ChatIcon {

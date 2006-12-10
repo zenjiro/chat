@@ -2,7 +2,7 @@ package frame;
 
 /**
  * あるユーザの状態とメインフレームが表示されているかどうかをカプセル化するクラスです。
- * @author zenjiro
+ * @author Kumano Tatsuo
  * 作成日：2004/11/12
  */
 public class Status {
