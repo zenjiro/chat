@@ -13,7 +13,7 @@ import frame.MainFrameListener;
 import frame.MainFrame;
 
 /**
- * UDPマルチキャストを用いたチャットクライアントです。
+ * チャットクライアントです。
  * @author zenjiro
  * 作成日：2004/11/11
  */
@@ -123,6 +123,10 @@ public class Main {
                 network.disconnect();
             }
         });
+        // test 
+        frame.setStatus("くまの", "在席", true);
+        frame.setStatus("タニム", "離籍", false);
+        frame.show();
         icon.waitForDisposed();
     }
 

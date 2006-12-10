@@ -2,6 +2,7 @@ package frame;
 
 import java.util.Map;
 import java.util.TreeMap;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.FocusAdapter;
@@ -196,12 +197,6 @@ public class MainFrame {
         this.othersTable = new Table(composite, SWT.MULTI);
         this.othersTable.setBackground(Display.getDefault().getSystemColor(
                 SWT.COLOR_WIDGET_BACKGROUND));
-        this.othersTable.addFocusListener(new FocusAdapter() {
-            public void focusGained(FocusEvent arg0) {
-                MainFrame.this.othersTable.deselectAll();
-                MainFrame.this.othersTable.traverse(SWT.TRAVERSE_TAB_NEXT);
-            }
-        });
         updateStatus();
         final Label label = new Label(composite, SWT.NONE);
         label.setText("@");
