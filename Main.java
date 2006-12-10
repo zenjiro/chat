@@ -1,9 +1,11 @@
 import icon.ChatIcon;
 import icon.ChatIconListener;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import network.Network;
 import network.NetworkListener;
 import network.Server;
 import frame.MainFrame;
@@ -30,9 +32,10 @@ public class Main {
      * 実行するには、以下のVMオプションをつけて下さい。
      * -Djava.library.path=/usr/local/eclipse3/eclipse/plugins/org.eclipse.swt.gtk_3.1.0/os/linux/x86/
      * @param args コマンドライン引数
-     * @throws UnknownHostException
+     * @throws IOException 
+     * @throws InterruptedException 
      */
-    public static void main(String[] args) throws UnknownHostException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         String userName = System.getProperty("user.name", "");
         String defaultStatus = InetAddress.getLocalHost().getHostName();
         if (args.length > 0) {
@@ -90,7 +93,19 @@ public class Main {
 			public void gotMessage(final String message) {
 				frame.append(message);
 			}
+
+			public String queryName() {
+				return name;
+			}
+
+			public void gotStatus(final String address, final String name, final String status) {
+				frame.setStatus(address, name, status, false);
+			}
 		});
+        Thread.sleep(2000);
+        for (final String address : Network.getAddresses()) {
+        	Network.sendStatus(address, name, defaultStatus);
+        }
         icon.waitForDisposed();
     }
 

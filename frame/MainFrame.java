@@ -91,7 +91,7 @@ public class MainFrame {
      * @param user ユーザ名
      * @param status 状態
      */
-    public MainFrame(String user, String status) {
+    public MainFrame(final String user, final String status) {
         this.user = user;
         this.status = status;
     }
@@ -104,7 +104,7 @@ public class MainFrame {
             this.shell = new Shell(Display.getDefault());
             this.shell.setText("チャットクライアント");
             this.shell.setLayout(new FillLayout());
-            TraverseListener traverseListener = new TraverseListener() {
+            final TraverseListener traverseListener = new TraverseListener() {
                 public void keyTraversed(TraverseEvent event) {
                     if (event.detail == SWT.TRAVERSE_ESCAPE) {
                         hide();
@@ -112,24 +112,27 @@ public class MainFrame {
                 }
             };
             this.shell.addFocusListener(new FocusAdapter() {
-                public void focusGained(FocusEvent arg0) {
+                @Override
+				public void focusGained(final FocusEvent arg0) {
                     MainFrame.this.shell.traverse(SWT.TRAVERSE_TAB_NEXT);
                 }
             });
-            SashForm sash = new SashForm(this.shell, SWT.NONE);
+            final SashForm sash = new SashForm(this.shell, SWT.NONE);
             sash.SASH_WIDTH = 10;
             arrangeLeft(traverseListener, sash);
             arrangeRight(traverseListener, sash);
             sash.setWeights(new int[] { 2, 1 });
             this.shell.setSize(640, 480);
             this.shell.addShellListener(new ShellAdapter() {
-                public void shellClosed(ShellEvent arg0) {
+                @Override
+				public void shellClosed(final ShellEvent arg0) {
                     hide();
                     MainFrame.this.shell.dispose();
                     MainFrame.this.shell = null;
                 }
 
-                public void shellIconified(ShellEvent arg0) {
+                @Override
+				public void shellIconified(final ShellEvent arg0) {
                     if (isOpen()) {
                         hide();
                     }
@@ -146,8 +149,8 @@ public class MainFrame {
      * @param traverseListener Escキーを監視するリスナ
      * @param sash サッシ
      */
-    private void arrangeLeft(TraverseListener traverseListener, SashForm sash) {
-        Composite composite = new Composite(sash, SWT.NONE);
+    private void arrangeLeft(final TraverseListener traverseListener, final SashForm sash) {
+        final Composite composite = new Composite(sash, SWT.NONE);
         composite.setLayout(new FormLayout());
         this.logText = new Text(composite, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.BORDER
                 | SWT.READ_ONLY);
@@ -156,7 +159,7 @@ public class MainFrame {
         final Text inputText = new Text(composite, SWT.SINGLE | SWT.BORDER);
         inputText.addTraverseListener(traverseListener);
         inputText.addTraverseListener(new TraverseListener() {
-            public void keyTraversed(TraverseEvent event) {
+            public void keyTraversed(final TraverseEvent event) {
                 if (event.detail == SWT.TRAVERSE_RETURN) {
                     MainFrame.this.listener.messageSent(inputText.getText());
                     inputText.setText("");
@@ -164,17 +167,18 @@ public class MainFrame {
             }
         });
         inputText.addFocusListener(new FocusAdapter() {
-            public void focusLost(FocusEvent arg0) {
+            @Override
+			public void focusLost(final FocusEvent arg0) {
                 inputText.setSelection(0);
             }
         });
         inputText.setFocus();
-        FormData formData1 = new FormData();
+        final FormData formData1 = new FormData();
         formData1.left = new FormAttachment(0, 10);
         formData1.right = new FormAttachment(100, 0);
         formData1.bottom = new FormAttachment(100, -10);
         inputText.setLayoutData(formData1);
-        FormData formData2 = new FormData();
+        final FormData formData2 = new FormData();
         formData2.left = new FormAttachment(0, 10);
         formData2.right = new FormAttachment(100, 0);
         formData2.top = new FormAttachment(0, 10);
@@ -191,8 +195,8 @@ public class MainFrame {
      * @param traverseListener Escキーを監視するリスナ
      * @param sash サッシ
      */
-    private void arrangeRight(TraverseListener traverseListener, SashForm sash) {
-        Composite composite = new Composite(sash, SWT.NONE);
+    private void arrangeRight(final TraverseListener traverseListener, final SashForm sash) {
+        final Composite composite = new Composite(sash, SWT.NONE);
         composite.setLayout(new FormLayout());
         this.othersTable = new Table(composite, SWT.MULTI);
         this.othersTable.setBackground(Display.getDefault().getSystemColor(
@@ -209,7 +213,7 @@ public class MainFrame {
                 SWT.COLOR_WIDGET_BACKGROUND));
         this.statusText.addTraverseListener(traverseListener);
         this.statusText.addTraverseListener(new TraverseListener() {
-            public void keyTraversed(TraverseEvent event) {
+            public void keyTraversed(final TraverseEvent event) {
                 if (event.detail == SWT.TRAVERSE_RETURN) {
                     MainFrame.this.status = MainFrame.this.statusText.getText();
                     MainFrame.this.listener.statusChanged();
@@ -217,7 +221,7 @@ public class MainFrame {
             }
         });
         this.statusText.addFocusListener(new FocusListener() {
-            public void focusLost(FocusEvent arg0) {
+            public void focusLost(final FocusEvent arg0) {
                 MainFrame.this.statusText.setSelection(0);
                 label.setForeground(Display.getDefault()
                         .getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
@@ -227,7 +231,7 @@ public class MainFrame {
                         SWT.COLOR_WIDGET_BACKGROUND));
             }
 
-            public void focusGained(FocusEvent arg0) {
+            public void focusGained(final FocusEvent arg0) {
                 label.setForeground(Display.getDefault().getSystemColor(SWT.COLOR_LIST_FOREGROUND));
                 MainFrame.this.statusText.setForeground(Display.getDefault().getSystemColor(
                         SWT.COLOR_LIST_FOREGROUND));
@@ -235,16 +239,16 @@ public class MainFrame {
                         SWT.COLOR_LIST_BACKGROUND));
             }
         });
-        FormData labelForm = new FormData();
+        final FormData labelForm = new FormData();
         labelForm.left = new FormAttachment(0, 0);
         labelForm.top = new FormAttachment(this.statusText, 0, SWT.CENTER);
         label.setLayoutData(labelForm);
-        FormData statusForm = new FormData();
+        final FormData statusForm = new FormData();
         statusForm.left = new FormAttachment(label, 0);
         statusForm.right = new FormAttachment(100, -10);
         statusForm.bottom = new FormAttachment(100, -10);
         this.statusText.setLayoutData(statusForm);
-        FormData othersForm = new FormData();
+        final FormData othersForm = new FormData();
         othersForm.left = new FormAttachment(0, 0);
         othersForm.right = new FormAttachment(100, -10);
         othersForm.top = new FormAttachment(0, 10);
@@ -277,16 +281,16 @@ public class MainFrame {
      * メッセージを追加します。
      * @param newMessage メッセージ
      */
-    public void append(String newMessage) {
+    public void append(final String newMessage) {
         while (this.message != null) {
             try {
                 Thread.sleep(100);
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException e) {
                 e.printStackTrace();
             }
         }
         this.message = newMessage;
-        Display display = Display.getDefault();
+        final Display display = Display.getDefault();
         display.asyncExec(new UpdateThread());
     }
 
@@ -316,20 +320,21 @@ public class MainFrame {
 
     /**
      * あるユーザの状態を変更します。
+     * @param address ホスト名
      * @param user ユーザ
      * @param status 状態
      * @param isOpen メインフレームを開いているかどうか
      */
-    public void setStatus(String user, String status, boolean isOpen) {
+    public void setStatus(final String address, final String user, final String status, final boolean isOpen) {
         if (this.othersStatus == null) {
             this.othersStatus = new TreeMap<String, Status>();
         }
         if (!status.equals("null")) {
-            this.othersStatus.put(user, new Status(status, isOpen));
+            this.othersStatus.put(address, new Status(user, status, isOpen));
         } else {
-            this.othersStatus.remove(user);
+            this.othersStatus.remove(address);
         }
-        Display display = Display.getDefault();
+        final Display display = Display.getDefault();
         display.asyncExec(new UpdateThread());
     }
 
@@ -341,9 +346,9 @@ public class MainFrame {
             if (this.othersTable != null) {
                 this.othersTable.removeAll();
                 if (this.othersStatus != null) {
-                    for (Map.Entry<String, Status> entry : this.othersStatus.entrySet()) {
-                        TableItem tableItem = new TableItem(this.othersTable, SWT.NONE);
-                        tableItem.setText(entry.getKey() + "@" + entry.getValue().getStatus());
+                    for (final Map.Entry<String, Status> entry : this.othersStatus.entrySet()) {
+                        final TableItem tableItem = new TableItem(this.othersTable, SWT.NONE);
+                        tableItem.setText(entry.getValue().getName() + "@" + entry.getValue().getStatus());
                         if (entry.getValue().isOpen()) {
                             tableItem.setImage(new Image(Display.getDefault(), "img/bubble_yellow.gif"));
                         } else {
@@ -368,7 +373,7 @@ public class MainFrame {
      * イベントを監視するリスナを追加します。
      * @param listener リスナ
      */
-    public void setFrameListener(MainFrameListener listener) {
+    public void setFrameListener(final MainFrameListener listener) {
         this.listener = listener;
     }
 

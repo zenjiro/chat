@@ -26,8 +26,19 @@ public class Server {
 						final Scanner scanner = new Scanner(socket.getInputStream());
 						while (scanner.hasNextLine()) {
 							final String line = scanner.nextLine();
-							for (final NetworkListener listener : Server.this.listeners) {
-								listener.gotMessage(line);
+							final String[] items = line.split("\t");
+							if (items.length > 1) {
+								if (items[0].equals("message")) {
+									for (final NetworkListener listener : Server.this.listeners) {
+										listener.gotMessage(items[1]);
+									}
+								} else if (items[0].equals("status")) {
+									if (items.length > 2) {
+										for (final NetworkListener listener : Server.this.listeners) {
+											listener.gotStatus(socket.getInetAddress().toString(), items[1], items[2]);
+										}
+									}
+								}
 							}
 						}
 						scanner.close();
@@ -68,5 +79,4 @@ public class Server {
 	public void addNetworkListener(final NetworkListener listener) {
 		this.listeners.add(listener);
 	}
-
 }
